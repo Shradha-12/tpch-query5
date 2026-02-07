@@ -1,5 +1,53 @@
 # TPCH Query 5 C++ Multithreading Project
 
+## My Submission
+
+### Instructions to Run
+
+1. Build the project
+
+2. Run the benchmarking script
+```
+bash benchmark.sh
+```
+
+### GitHub Link
+https://github.com/Shradha-12/tpch-query5
+
+### Final Result
+`result_1.csv` (Single Threaded) and `result_4.csv` (Multi Threaded) files contain the following result:
+```
+n_name,revenue
+INDONESIA,115979499.6518
+CHINA,109568736.2163
+INDIA,106258458.1656
+JAPAN,104738341.0311
+VIETNAM,98052109.1293
+```
+
+### Runtime
+```
+Single Threaded: 2m41.549s
+Multi Threaded: 1m46.450s
+```
+
+### Screenshot
+![alt text](image.png)
+
+
+### Interpretation & Analysis
+
+**Implementation**: The solution uses hash maps for smaller tables (Nation, Supplier, Customer, Orders) to enable O(1) lookups. To prevent memory issues at SF2, only necessary columns are loaded.
+
+**Parallelism**: The largest table (`lineitem`, ~12M rows) is processed in parallel across 4 threads. Each thread performs local aggregation to minimize contention.
+
+**Performance**: We observe a speedup of ~1.52x, which is capped by I/O (reading large .tbl files) and sequential parsing overhead, which follows Amdahl's Law. However, multithreading successfully parallelized the most CPU-intensive part of the query.
+
+
+
+
+# Original Problem Statement
+
 ## Overview
 Task is to implement TPCH Query 5 using C++ and multithreading. 
 1. Understand the query 5 given below.

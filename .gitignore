@@ -4,4 +4,6 @@
 *.exe
 *.log
 build/
-
+tpch-dbgen/
+*.tbl
+*.csv
